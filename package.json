@@ -1,23 +1,23 @@
 {
-  "name": "appgambit-slack-bot",
+  "name": "fresco-slackbot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.2",
     "content-type": "^1.0.4",
-    "crypto": "^1.0.1",
-    "express": "^4.16.4",
-    "lodash": "^4.17.11",
-    "raw-body": "^2.3.3",
-    "serverless-http": "^1.8.0"
+    "express": "^4.17.3",
+    "raw-body": "^2.5.1",
+    "serverless-http": "^2.7.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.381.0",
-    "serverless-offline": "^3.31.3"
+    "aws-sdk": "^2.1103.0",
+    "serverless-offline": "^8.5.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy:prod": "serverless deploy --stage=prod --aws-profile=fresco-prod --verbose",
+    "deploy:test": "serverless deploy --stage=test --aws-profile=fresco-test --verbose",
+    "deploy:dev": "serverless deploy --stage=dev --aws-profile=fresco-test --verbose"
   },
   "author": "",
   "license": "ISC"

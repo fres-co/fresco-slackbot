@@ -1,14 +1,12 @@
+const stage = process.env.STAGE || 'dev';
 const 
 serverless  = require('serverless-http'),
 express     = require('express'),
 bodyParser  = require('body-parser'),
-config      = require('./config/' + process.env.STAGE + '.json'),
-holidays    = require('./data/holidays.json'),
-commands    = require('./data/commands.json'),
-_           = require('lodash'),
+config      = require(`./config/${stage}.json`),
 crypto      = require('crypto');
 
-const app         = express();
+const app = express();
 
 app.use( ( req, res, next) => {
     var data = '';
@@ -41,33 +39,16 @@ app.use( (req, res, next) => {
     }
 });
 
-const holidayRes = {
-    "response_type": "ephemeral",
-    "text": "2019 Holiday Calendar",
-    "attachments": _.map(holidays.data, d => { 
-        return {"text" : d.date + " : " + d.title};
-    })
-};
-
-const helpRes = {
-    "response_type": "ephemeral",
-    "text": "Please use one of these commands.",
-    "attachments": _.map(commands.data, c => {
-        return {"text": c.command}
-    })
-};
-
 app.post('/', (req, res) => {
     const { text } = req.body;
-
-    let resData = {};
-    if(text == 'holidays'){
-        resData = holidayRes
-    }else{
-        resData = helpRes
-    }
-
-    res.send(resData);
+    const response = {
+        "response_type": "in_channel",
+        "text": "Join me on Fres.co :)",
+        "attachments": [{
+            text: 'https://fres.co/' + (!text ? 'office' : text.toLowerCase().replace(' ', '/')),
+        }]
+    };
+    res.send(response);
 });
 
 module.exports.handler = serverless(app);
